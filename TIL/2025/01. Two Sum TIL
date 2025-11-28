@@ -1,0 +1,35 @@
+(Description of the Problem)
+Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
+
+You may assume that each input would have exactly one solution, and you may not use the same element twice.
+
+--- Solution ---
+class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        int first = 0;
+        int second = 0;
+        boolean found = false;
+
+        for (int i = 0; i < nums.length & !found; i++) {
+            for (int j = i+1; j < nums.length & !found; j++) {
+                if (nums[i] + nums[j] == target) {
+                    first = i;
+                    second = j;
+                    found = true;
+                }
+            }
+        }
+
+        int[] answer = {first, second};
+        return answer;
+    }
+}
+
+--- Approach ---
+# Key Concepts
+Using nested loop to find the right one indices in the int array.
+Because it was given only one exact set of two numbers is existed, I used boolean found value, to quit the loop immediately when I found the answer.
+
+# Improvement
+The time complexity of this code is O(n^2) due to nested loop.
+For code efficiency, I found the Hash map concept to make it faster.

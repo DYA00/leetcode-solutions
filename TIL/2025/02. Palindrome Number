@@ -1,0 +1,30 @@
+(Description of the Problem)
+Given an integer x, return true if x is a palindrome, and false otherwise.
+
+--- Solution ---
+class Solution {
+    public boolean isPalindrome(int x) {
+        if (x < 0) {
+            return false;
+        }
+
+        int original = x;
+        int oneDigit = 0;
+        int reverse = 0;
+
+        while (x != 0) {
+            reverse *= 10;
+            oneDigit = x % 10;
+            x /= 10;
+            reverse += oneDigit;
+        }
+
+        return reverse == original;
+    }
+}
+
+--- Approach ---
+#Key concepts
+At first, filter the negative numbers using if statement.
+Then, generate a number which is reversed of int x, using while loop.
+Untile the x number is not 0, add the one digit of x into reversed number.

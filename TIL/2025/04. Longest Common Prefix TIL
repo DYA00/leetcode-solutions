@@ -1,0 +1,37 @@
+(Description)
+Write a function to find the longest common prefix string amongst an array of strings.
+If there is no common prefix, return an empty string "".
+
+--- Solution ---
+class Solution {
+    public String longestCommonPrefix(String[] strs) {
+        if (strs == null) {
+            return "";
+        }
+
+        String prefix = strs[0];
+
+        for (int i = 1; i < strs.length; i++) {
+            String current = strs[i];
+
+            while (current.indexOf(prefix) != 0) {
+                prefix = prefix.substring(0, prefix.length() - 1);
+
+                if (prefix.isEmpty()) {
+                    return "";
+                }
+            }
+        }
+
+        return prefix;
+    }
+}
+
+--- Approach ---
+# Key Concepts
+Nested loop
+Outer loop: searching the words in the given String array from second to last.
+Inner loop: searching the common prefix throughout the comparsion between figured prefix and another word from outer loop.
+
+# Point 1
+I reminded how to use the indexOf(), and that saved my code efficency.

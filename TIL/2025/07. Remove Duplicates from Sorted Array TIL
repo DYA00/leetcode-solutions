@@ -1,0 +1,48 @@
+(Description)
+Given an integer array nums sorted in non-decreasing order, remove the duplicates in-place such that each unique element appears only once. The relative order of the elements should be kept the same.
+
+Consider the number of unique elements in nums to be k​​​​​​​​​​​​​​. After removing duplicates, return the number of unique elements k.
+
+The first k elements of nums should contain the unique numbers in sorted order. The remaining elements beyond index k - 1 can be ignored.
+
+Custom Judge:
+
+The judge will test your solution with the following code:
+
+int[] nums = [...]; // Input array
+int[] expectedNums = [...]; // The expected answer with correct length
+
+int k = removeDuplicates(nums); // Calls your implementation
+
+assert k == expectedNums.length;
+for (int i = 0; i < k; i++) {
+    assert nums[i] == expectedNums[i];
+}
+If all assertions pass, then your solution will be accepted.
+
+--- Solution ---
+class Solution {
+    public int removeDuplicates(int[] nums) {
+        int current = nums[0];
+        int prev;
+        int k = 1;
+        
+        for (int i = 1; i < nums.length; i++) {
+            prev = current;
+            current = nums[i];
+            if (current > prev) {
+                nums[k] = current;
+                k ++;
+            }
+        }
+
+        return k;
+    }
+}
+
+--- Approach ---
+# Key Point
+Because it evalute until the index k, which is the unique number of the sorted array,
+the main point of this solution is making the sorted array perfect until the index k.
+Therefore, I didn't need another loop to make the sorted array rearrange or decrease its length.
+I just put the unique numbers into the k position one by one.

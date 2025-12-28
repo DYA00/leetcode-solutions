@@ -1,0 +1,24 @@
+(Description)
+Given two strings needle and haystack, return the index of the first occurrence of needle in haystack, or -1 if needle is not part of haystack.
+
+--- Soltuion ---
+class Solution {
+    public int strStr(String haystack, String needle) {
+        if (haystack.length() < needle.length()) {
+            return -1;
+        }
+        
+        for(int i = 0; i <= haystack.length() - needle.length(); i++) {
+            if (haystack.substring(i, i + needle.length()).equals(needle)) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+}
+
+--- Approach ---
+Loop the String haystack from first to the index that has the possibility to hold needle.
+At each looped time, figured out the substring of haystack into the same length with needle,
+and if it is same, returned the current position, which is int i.

@@ -1,0 +1,26 @@
+(Description)
+Given a sorted array of distinct integers and a target value, return the index if the target is found. If not, return the index where it would be if it were inserted in order.
+You must write an algorithm with O(log n) runtime complexity.
+
+--- Solution ---
+class Solution {
+    public int searchInsert(int[] nums, int target) {
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] >= target) {
+                return i;
+            }
+        }
+
+        return nums.length;
+    }
+}
+
+--- Approach ---
+Because it was given sorted integers array, it was easy to find the solution with one loop.
+From first to the last, compare the each index's int, and the target,
+and if the index's number is equal or bigger than the target,
+I returned the index, i at this case.
+
+And, then when the loop was done, if any number was returned,
+that means that the number should be the after the last index,
+therefore I let it return its length, if nothing was returned after the loop.

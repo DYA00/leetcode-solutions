@@ -1,0 +1,31 @@
+(Description)
+Given a string s consisting of words and spaces, return the length of the last word in the string.
+
+A word is a maximal substring consisting of non-space characters only.
+
+--- Solution ---
+class Solution {
+    public int lengthOfLastWord(String s) {
+        int blank = 0;
+        String lastWord = "";
+
+        for (int i = 0; i < s.length(); i++) {
+            if (s.substring(i, i + 1).equals(" ")) {
+                blank = i + 1;
+            }
+            else {
+                lastWord = s.substring(blank, i + 1);
+            }
+        }
+
+        return lastWord.length();
+    }
+}
+
+--- Approach ---
+Loop from first to the last, and keep tracking the blanks,
+if it find the blanks, it reset the starting index of the last word,
+then when it reaches to the last, it will return the length of the stored word's length.
+
+# Improvement Point
+If the loop started from backward, algorithm will be more efficient.

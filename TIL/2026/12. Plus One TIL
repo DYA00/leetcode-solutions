@@ -1,0 +1,49 @@
+(Description)
+You are given a large integer represented as an integer array digits, where each digits[i] is the ith digit of the integer. The digits are ordered from most significant to least significant in left-to-right order. The large integer does not contain any leading 0's.
+
+Increment the large integer by one and return the resulting array of digits.
+
+--- Solution ---
+class Solution {
+    public int[] plusOne(int[] digits) {
+        int last = digits.length - 1;
+        int index = last;
+
+        if (digits[last] == 9) {
+            while (index > 0 && digits[index] == 9) {
+                digits[index] = 0;
+                index --;
+            }
+
+            if (index > 0 || digits[index] != 9) {
+                digits[index] ++;
+            }
+            else {
+                int[] newDigits = new int[digits.length + 1];
+                newDigits[0] = 1;
+                for (int i = 1; i < newDigits.length; i ++) {
+                    newDigits[i] = 0;
+                }
+                return newDigits;
+            }
+        }
+        else {
+            digits[last] ++;
+        }  
+        
+        return digits;
+    }
+}
+
+--- Approach ---
+(Main Problem)
+Carrying 1 to the previous index, and if every index was filled with 9, such as [9, 9, 9],
+Making another int array, with 1 added length is the main factor.
+
+(Key Concept)
+Dividng two cases, whether its last number was 9 or not,
+and if last one was 9, figuring out its previous numbers, and positions of them.
+
+1. If last number was not 9, just added 1 to that.
+2. If last number was 9, and its previous number was not 9, made every 9 to 0 before the not 9 number, then add 1 to that.
+3. If last number was 9, and every previous number was also 9, made another int array, with first number is 1, all of the left was assigned with 0.

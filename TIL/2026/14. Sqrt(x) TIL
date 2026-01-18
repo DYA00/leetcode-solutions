@@ -1,0 +1,30 @@
+(Description)
+Given a non-negative integer x, return the square root of x rounded down to the nearest integer. The returned integer should be non-negative as well.
+You must not use any built-in exponent function or operator.
+
+--- Solution ---
+class Solution {
+    public int mySqrt(int x) {
+        int num = 1;
+
+        while (x / num > num) {
+            num ++;
+        }
+
+        if (x / num == num) {
+            return num;
+        }
+        else {
+            return num - 1;
+        }
+    }
+}
+
+--- Approach ---
+Using loop, I find the point when x divided by num is over num that is the most close one to its square.
+Due to it doesn't require to return its round number, 
+from the found point, using if statement, I return the num or num - 1.
+
+# Improvement
+Using the loop to increment one by one was not efficient way to find the answer.
+Maybe, arraying of int would be save the efficiency more.

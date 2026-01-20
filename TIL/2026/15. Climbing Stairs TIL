@@ -1,0 +1,40 @@
+(Description)
+You are climbing a staircase. It takes n steps to reach the top.
+Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?
+
+--- Solution ---
+class Solution {
+    public int climbStairs(int n) {
+        if (n <= 2) {
+            return n;
+        }
+
+        int prev2 = 1;
+        int prev1 = 2;
+
+        for(int i = 3; i <= n; i ++) {
+            int current = prev1 + prev2;
+
+            prev2 = prev1;
+            prev1 = current;
+        }
+
+        return prev1;
+    }
+}
+
+--- Approach ---
+It is asking the combination of steps with 1 and 2.
+Typically there are two general cases in there,
+1. one is n-2, which is left two steps until n (prev2)
+2. The other one is n-1, which is left one step until n (prev1)
+
+(Key Point)
+In the n-1 case, the only way to approach n is one, taking 1 step.
+While, in the n-2 case, there are two ways to approach n; taking two 1 steps, or one 2 step.
+
+However, due to it is not number of steps, but combination of steps,
+even if it take one more one step, the combination was not changed.
+
+That means next n's combination is prev1 + prev2,
+so that I loop from 3 to the n, to reach out n, keeping addition prev1, and prev2 under the logic.

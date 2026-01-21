@@ -1,0 +1,43 @@
+(Description)
+Given the head of a sorted linked list, delete all duplicates such that each element appears only once. Return the linked list sorted as well.
+
+--- Solution ---
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode deleteDuplicates(ListNode head) {
+        if (head == null) {
+            return null;
+        }
+
+        ListNode current = head;
+
+        while (current.next != null) {
+            if (current.val == current.next.val) {
+                current.next = current.next.next;
+            }
+            else {
+                current = current.next;
+            }
+        }
+
+        return head;
+    }
+}
+
+--- Approach ---
+Basic problem, regarding of the basic understanding in the concept of the Linked List.
+
+(Key Point)
+Using while loop it cover from head to the last node.
+In the loop, throughout if statement compare current and next val,
+1. If two values were same, change the next node to the next of next one
+2. Else, just change the current node to the next node.

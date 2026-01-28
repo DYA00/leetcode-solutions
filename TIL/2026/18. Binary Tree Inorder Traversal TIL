@@ -1,0 +1,55 @@
+// Description
+Given the root of a binary tree, return the inorder traversal of its nodes' values.
+
+--- Solution ---
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> inorder = new ArrayList<>();
+        traverse(root, inorder);
+
+        return inorder;
+    }
+
+    public void traverse(TreeNode node, List<Integer> result) {
+        //When current Node is null, quit the recursion.
+        if (node == null) {
+            return;
+        }
+
+        //Due to it is inorder, getting left node first.
+        traverse(node.left, result);
+
+        //After the left side, add current value.
+        result.add(node.val);
+
+        //Then, going to the right node.
+        traverse(node.right, result);
+    }
+}
+
+--- Approach ---
+//Key Point
+Recursion was the core concept of this algorithmn.
+At first I approached with if statement, divided by some cases, but it was too inefficient.
+In the process of figuring out more proper way, Recursion did perfect job in here.
+
+In the recursion of traverse, I made them in 4 steps.
+1. If there is no value, quit the the recursion.
+2. If there is left, get the left node first.
+3. After the left side, finally add the current node value.
+4. Then, same process in the right-side as well.

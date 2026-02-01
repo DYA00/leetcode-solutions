@@ -1,0 +1,35 @@
+(Description)
+Given the root of a binary tree, check whether it is a mirror of itself (i.e., symmetric around its center).
+
+--- Solution ---
+class Solution {
+    public boolean isSymmetric(TreeNode root) {
+        if (root == null) {
+            return true;
+        }
+
+        return isMirror(root.left, root.right);
+    }
+
+    private boolean isMirror(TreeNode leftNode, TreeNode rightNode) {
+        if (leftNode == null && rightNode == null) {
+            return true;
+        }
+
+        if (leftNode == null || rightNode == null || leftNode.val != rightNode.val) {
+            return false;
+        }
+
+        return isMirror(leftNode.left, rightNode.right) && isMirror(leftNode.right, rightNode.left);
+    }
+}
+
+--- Approach ---
+The key concept was recusrion in this node tree problem.
+The base cases were same with the last problem of Same tree.
+
+1. if both side node was all null, it return true.
+2. if only one side node is null, or both side node have different value, it return false.
+3. Then, it call recursion until to one of the base cases, but the return should be called symmetric(it was the key point in this problem),
+  like leftNode's left, and rightNode's right, that is comparing each sides' edges.
+  or leftNode's right, and rightNode's left, those are inner things of each sides.

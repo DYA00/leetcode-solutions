@@ -1,0 +1,25 @@
+(Description)
+Given the root of a binary tree, return its maximum depth.
+A binary tree's maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.
+
+--- Solution ---
+class Solution {
+    public int maxDepth(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }   
+
+        int leftDepth = maxDepth(root.left);
+        int rightDepth = maxDepth(root.right);
+
+        return 1 + Math.max(leftDepth, rightDepth);
+    }
+}
+
+--- Approach ---
+Recursive was the key concept of this problem.
+The base case of the recursive is when the root node is null, then return 0.
+Other cases, it calculate the left and right side depth,
+becuase it return 1 + the calculated value, that means every time of calculating the value, it add 1.
+
+Then, when it hit the base case, it return 0, added every added 1, which is the maximum depth of the given binary tree.

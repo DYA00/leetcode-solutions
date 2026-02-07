@@ -1,0 +1,35 @@
+(Description)
+Given an integer array nums where the elements are sorted in ascending order, convert it to a height-balanced binary search tree.
+
+--- Solution ---
+class Solution {
+    public TreeNode sortedArrayToBST(int[] nums) {
+        if(nums == null) {
+            return null;
+        }
+
+        return build(nums, 0, nums.length - 1);
+    }
+
+    private TreeNode build(int[] nums, int start, int end) {
+        if (start > end) {
+            return null;
+        }
+
+        int mid = (start + end) / 2;
+        TreeNode root = new TreeNode(nums[mid]);
+
+        root.left = build(nums, start, mid - 1);
+        root.right = build(nums, mid + 1, end);
+
+        return root;
+    }
+}
+
+--- Approach ---
+1. At first, if the given array, nums was null, it returns null.
+2. Using recursion, it build the TreeNode, one by one.
+3. In the recursion, it ask start and end value, they role like boundary dividing left side and right side to fill the Binary Tree.
+4. If start value was bigger than the end one, it stop the recursion (Base case).
+5. Other cases, it calculate the int mid, using given two numbers of start and end.
+6. Then, generate another new TreeNode, with the value from the nums at the mid position.

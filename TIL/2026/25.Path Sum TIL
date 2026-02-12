@@ -1,0 +1,28 @@
+(Description)
+Given the root of a binary tree and an integer targetSum, return true if the tree has a root-to-leaf path such that adding up all the values along the path equals targetSum.
+
+--- Solution ---
+class Solution {
+    public boolean hasPathSum(TreeNode root, int targetSum) {
+        if (root == null) 
+            return false;
+        
+        if (root.left == null && root.right == null) 
+            return root.val == targetSum;
+
+        int remainedSum = targetSum - root.val;
+
+        return hasPathSum(root.left, remainedSum) || hasPathSum(root.right, remainedSum);
+    }
+}
+
+--- Approach ---
+Basically, this recursion subtract targetSum by root.val in each step.
+So that, it compares the last leaf's value and subtracted number.
+
+1. At first if the root is null, there is no any number to subtract, so that it returns false.
+2. When it reached to the leaf: both of left and right nodes is null, return true if the root.val is same with subtracted targetSum.
+
+Before the leaf,
+The recursion kept calculating the subtracted number, callled remainedSum.
+Then, it called the recursion with left and right nodes throughout || operator.

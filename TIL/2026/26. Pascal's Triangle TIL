@@ -1,0 +1,36 @@
+(Description)
+Given an integer numRows, return the first numRows of Pascal's triangle.
+
+--- Solution ---
+class Solution {
+    public List<List<Integer>> generate(int numRows) {
+        List<List<Integer>> pascal = new ArrayList<>();
+        for (int i = 0; i < numRows; i ++) {
+            List<Integer> row = new ArrayList<>();
+
+            for (int j = 0; j <= i; j ++) {
+                if (j == 0 || j == i) {
+                    row.add(1);
+                }
+                else {
+                    List<Integer> prev = pascal.get(i - 1);
+                    row.add(prev.get(j - 1) + prev.get(j));
+                }
+            }
+            pascal.add(row);
+        }
+        return pascal;
+    }
+}
+
+--- Approach ---
+Key concpet was the nested loop.
+In outer loop, it track the number of row, from 0 to until numRows - 1.
+At this level, it made a new List for Inner Loop.
+
+Then, in inner loop, it add the number into the list followed by the rule of Pascal's Triangle.
+The common points were,
+1. At first last position, it should hold 1. (So, when j == 0 or j == i, it added 1.)
+2. Execpt the case of number 1, it always hold the value that was added at position j - 1 and j from the above row.
+
+When, the inner loop was done, it was added to the list called pascal in the level of outer loop.

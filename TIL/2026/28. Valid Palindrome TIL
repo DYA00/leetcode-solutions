@@ -1,0 +1,38 @@
+(Description)
+A phrase is a palindrome if, after converting all uppercase letters into lowercase letters and removing all non-alphanumeric characters, 
+it reads the same forward and backward. Alphanumeric characters include letters and numbers.
+
+Given a string s, return true if it is a palindrome, or false otherwise.
+
+--- Solution ---
+class Solution {
+    public boolean isPalindrome(String s) {
+        s = s.toLowerCase().replaceAll("[^a-z0-9]", "");
+
+        if (s.length() <= 1) {
+            return true;
+        }
+
+        int left = 0;
+        int right = s.length() - 1;
+
+        while (left < right) {
+            if (s.charAt(left) != s.charAt(right)) {
+                return false;
+            }
+
+            left ++;
+            right --;
+        }
+
+        return true;
+    }
+}
+
+--- Approach ---
+At first step, it deletes all non-alphanumeric characters, converting uppercase to lowercase.
+Then, it set the left and right values, that they are first and last index of the converted string, s.
+
+Second, while loop constantly compare each characters, left and right of the string s.
+When they aren't same, it is not palindrome, returning false.
+Otherwise, nothing returned the false, it returns true at last.

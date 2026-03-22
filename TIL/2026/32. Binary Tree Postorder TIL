@@ -1,0 +1,24 @@
+(Description)
+Given the root of a binary tree, return the postorder traversal of its nodes' values.
+
+--- Solution ---
+class Solution {
+    public List<Integer> postorderTraversal(TreeNode root) {
+        List<Integer> post = new ArrayList<>();
+        dfs(root, post);
+        return post;
+    }
+
+    private void dfs(TreeNode root, List<Integer> result) {
+        if (root != null) {
+            dfs(root.left, result);
+            dfs(root.right, result);
+            result.add(root.val);
+        }
+    }
+}
+
+--- Approach ---
+#Key Concept
+- Because the postorder was left - right - root, 
+  in the traversal, it called left at first, right at second, and added the current value at last.

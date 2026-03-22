@@ -1,0 +1,34 @@
+(Description)
+Given the root of a binary tree, return the preorder traversal of its nodes' values.
+
+--- Solution ---
+class Solution {
+    public List<Integer> preorderTraversal(TreeNode root) {
+        List<Integer> preorder = new ArrayList<>();
+        pre(root, preorder);
+        return preorder;
+    }
+
+    private void pre(TreeNode root, List<Integer> result) {
+        if (root == null)
+            return;
+
+        result.add(root.val);
+        pre(root.left, result);
+        pre(root.right, result);
+    }
+}
+
+--- Approach ---
+#Key Concept
+The algolithmn was included two main parts.
+1. Traversal followed by preorder rule.
+2. Adding the values of preorder.
+
+To add the values, I made a void function in the class level.
+And under that function, traversal was worked.
+
+In the traversal,
+- Base case was when the root was null.
+- Becasue the preorder is ordered by root - left - right, I added the value of binary tree at first,
+  calling the recursion in order of left and right.

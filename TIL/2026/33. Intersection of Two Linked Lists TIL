@@ -1,0 +1,30 @@
+(Description)
+Given the heads of two singly linked-lists headA and headB, return the node at which the two lists intersect. 
+If the two linked lists have no intersection at all, return null.
+
+For example, the following two linked lists begin to intersect at node c1
+
+--- Solution ---
+public class Solution {
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        if (headA == null || headB == null) return null;
+
+        ListNode pA = headA;
+        ListNode pB = headB;
+
+        while (pA != pB) {
+            pA = (pA == null) ? headB : pA.next;
+            pB = (pB == null) ? headA : pB.next;
+        }
+
+        return pA;
+    }
+}
+
+--- Approach ---
+Teneray Operator was key role in this solution to link the end and the begin of Linked lists.
+In this case, if the intersection exist in anywhere, the linked lists will form the cycle,
+while the link will be finished at one time.
+
+Using the concept, if two linked lists form the cycle, pA and PB will meet any point, 
+then when they meet at first is right the beginning point of their intersections.

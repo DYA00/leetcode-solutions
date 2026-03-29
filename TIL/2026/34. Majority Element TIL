@@ -1,0 +1,30 @@
+(Description)
+Given an array nums of size n, return the majority element.
+
+The majority element is the element that appears more than ⌊n / 2⌋ times. You may assume that the majority element always exists in the array.
+
+--- Solution ---
+class Solution {
+    public int majorityElement(int[] nums) {
+        int count = 0;
+        int candidate = 0;
+
+        for (int num : nums) {
+            if (count == 0) {
+                candidate = num;
+            }
+
+            count += (num == candidate) ? 1 : -1;
+        }
+
+        return candidate;
+    }
+}
+
+--- Approach ---
+(Key Concept)
+The main idea is that the majority number should be more than n/2 times in the given array.
+Therefore, algorithmn could find the one, without storing each number, coundting wheater it is same with the candidate of the majority number.
+
+Then, at the last time, whatever the inner process is, one number should be counted more than 0,
+that figured out the majority number.

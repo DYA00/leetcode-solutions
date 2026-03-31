@@ -1,0 +1,24 @@
+(Description)
+Reverse bits of a given 32 bits signed integer.
+
+--- Solution ---
+class Solution {
+    public int reverseBits(int n) {
+        int result = 0;
+        for (int i = 0; i < 32; i++) {
+            result = (result << 1) | (n & 1);
+            n >>= 1;
+        }
+
+        return result;
+    }
+}
+
+--- Approach ---
+(What I learned)
+Bits calculator, << and >> was what I essentially learned today.
+
+Because the size of bits was fixed at the description as 32, that makes the condition of for loop, i < 32.
+Inside of for loop, result was moved to left at first, making the most right side fixed to 0.
+Therefore, added value to result is follwed by (n & 1), if right side of n is 0, it is 1, otherwise it would add 0.
+Then, n >>= 1 move given number n's digits to right by 1 bit, that helps to calculate exact values.

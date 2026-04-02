@@ -1,0 +1,22 @@
+(Description)
+Given a positive integer n, write a function that returns the number of set bits in its binary representation (also known as the Hamming weight).
+
+--- Solution ---
+class Solution {
+    public int hammingWeight(int n) {
+        int count = 0;
+        
+        while (n > 0) {
+            count += (n & 1);
+            n >>>= 1;
+        }
+
+        return count;
+    }
+}
+
+--- Approach ---
+(Key Concepts)
+1. Using & operation. Because the bits of 1 is 000...001, it alsways compare the last unit of bits of n.
+2. >>> operation was the key point in the inner loop. It move the bits of n to the right side by 1 unit, and adding 0 to the first unit.
+  Therfore, the & operation always calculate with new last unit of bits and while loop could be done when all bits become 0, when the number n not bigger than 0.

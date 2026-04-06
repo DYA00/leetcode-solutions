@@ -1,0 +1,33 @@
+(Description)
+Given the head of a linked list and an integer val, remove all the nodes of the linked list that has Node.val == val, and return the new head.
+
+--- Solution ---
+class Solution {
+    public ListNode removeElements(ListNode head, int val) {
+        while (head != null && head.val == val) {
+            head = head.next;
+        }
+
+        ListNode cover = head;
+
+        while (cover != null && cover.next != null) {
+            if (cover.next.val == val) {
+                cover.next = cover.next.next;
+            } else {
+                cover = cover.next;
+            }
+        }
+
+        return head;
+    }
+}
+
+--- Approach ---
+There were two while loops.
+
+1. First one is for setting the right beginning point.
+If the head itself have the val which is same with given int val, it must set find another next node, having diffeent val with given one.
+
+2. The second loop is for covering from first to the last to eliminate nodes that have val same with given val.
+Using the if statement, when the next node's val is same with given val, it eliminate the next node,
+else it made the pointer forward.

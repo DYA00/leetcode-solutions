@@ -1,0 +1,48 @@
+(Description)
+Given two strings s and t, determine if they are isomorphic.
+
+Two strings s and t are isomorphic if the characters in s can be replaced to get t.
+
+All occurrences of a character must be replaced with another character while preserving the order of characters. 
+No two characters may map to the same character, but a character may map to itself.
+
+--- Solution ---
+class Solution {
+    public boolean isIsomorphic(String s, String t) {
+        HashMap<Character, Character> map = new HashMap<>();
+        HashSet<Character> used = new HashSet<>();
+
+        for (int i = 0; i < s.length(); i ++) {
+            char sub1 = s.charAt(i);
+            char sub2 = t.charAt(i);
+
+            if (map.containsKey(sub1)) {
+                if (map.get(sub1) != sub2) {
+                    return false;
+                }
+            }
+            else {
+                if (used.contains(sub2)) {
+                    return false;
+                }
+            }
+
+            map.put(sub1, sub2);
+            used.add(sub2);
+        }
+
+        return true;
+    }
+}
+
+--- Approach ---
+There were two Hashs in the algorithmn.
+1. In the HashMap, it links two characters at the same position,
+2. In the HashSet, it stores the used key in the HashMap.
+
+In the loop, from first character to the last one,
+1. if the link was already existed, check the last key and current key is same or not,
+2. or, if the key was already used in the last characters.
+Then, it returns false.
+
+Otherwise, it returns true.

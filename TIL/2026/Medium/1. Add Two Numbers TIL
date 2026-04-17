@@ -1,0 +1,54 @@
+(Description)
+You are given two non-empty linked lists representing two non-negative integers. 
+The digits are stored in reverse order, and each of their nodes contains a single digit. 
+Add the two numbers and return the sum as a linked list.
+
+You may assume the two numbers do not contain any leading zero, except the number 0 itself.
+
+--- Solution ---
+class Solution {
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode result = new ListNode();
+        ListNode cover = result;
+        boolean over = false;
+        
+        while (l1 != null || l2 != null) {
+            int current = 0;
+            if (l1 != null) {
+                current += l1.val;
+                l1 = l1.next;
+            }
+
+            if (l2 != null) {
+                current += l2.val;
+                l2 = l2.next;
+            }
+
+            if (over == true) {
+                current++;
+                over = false;
+            }
+
+            if (current > 9) {
+                over = true;
+                current = current % 10;
+            }
+
+            ListNode add = new ListNode(current);
+            cover.next = add;
+            cover = cover.next;
+        }
+
+        if(over) {
+            cover.next = new ListNode(1);
+        }
+
+        return result.next;
+    }
+}
+
+--- Approach ---
+(Key Concept)
+1. Using while loop to cover all linked nodes in the given linked lists l1 and l2.
+2. Not going forward to null nodes if one of given linked lists covered all linked nodes.
+3. Adding two values at the same position, and round 1 if the sum is over 10, checking with the boolean over.

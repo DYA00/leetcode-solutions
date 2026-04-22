@@ -1,0 +1,30 @@
+(Description)
+Given a string s, find the length of the longest substring without duplicate characters.
+
+--- Solution ---
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        int result = 0;
+        int left = 0;
+        HashSet<Character> used = new HashSet<>();
+
+        for (int right = 0; right < s.length(); right++) {
+            char current = s.charAt(right);
+
+            while (used.contains(current)) {
+                used.remove(s.charAt(left));
+                left++;
+            }
+
+            used.add(current);
+            result = Math.max(result, right - left + 1);
+        }
+
+        return result;
+    }
+}
+
+--- Approach ---
+Key concept of this problem is adding and removing used characters into the HashSet.
+In the loop, if new character was encountered HashSet can remember the serial of used characters, so that it can figure out the substring.
+And if used character was found, reset the substring and reset the HashSet with left value.

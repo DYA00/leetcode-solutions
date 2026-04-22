@@ -1,6 +1,6 @@
 # LeetCode 50/30/10 Challenge (Java)
 
-This repository documents my algorithm training during my military service in South Korea.
+This repository documents my algorithm training during my military service in South Korea (2025-2027).
 
 The goal is to solve LeetCode problems across three difficulty levels:
 

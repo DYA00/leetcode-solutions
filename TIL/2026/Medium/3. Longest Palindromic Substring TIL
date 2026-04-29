@@ -1,0 +1,42 @@
+(Description)
+Given a string s, return the longest palindromic substring in s.
+
+--- Solution ---
+//Solution for the problem, Longest Palindromic Substring in the leetcode.
+class Solution {
+    public String longestPalindrome(String s) {
+        String longest = "";
+
+        for (int i = 0; i < s.length(); i++) {
+            String odd = expand(s,i,i);
+            String even = expand(s,i,i+1);
+
+            if (odd.length() > longest.length()) longest = odd;
+            if (even.length() > longest.length()) longest = even;
+        }
+
+        return longest;
+    }
+
+    private String expand(String s, int left, int right) {
+        while (left >= 0 && right < s.length()
+            && s.charAt(left) == s.charAt(right)) {
+                left--;
+                right++;
+            }
+
+        return s.substring(left+1, right);
+    }
+}
+
+--- Approach ---
+(Key Concept)
+There are two types of palindromic substrings.
+1. odd palindrome, 'aba'
+2. even palindrome, 'bb'
+
+So that, in this algorithm the loop should be applied into the two cases.
+But the common next step is same in here : expanding 1 unit into left and right 
+such as, 'a' -> 'bab' & 'bb' -> 'abba'. 
+
+Therefore, in the private it expanded one unit in each left and right.

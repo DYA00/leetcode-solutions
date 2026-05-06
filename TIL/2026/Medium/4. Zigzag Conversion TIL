@@ -1,0 +1,50 @@
+(Description)
+The string "PAYPALISHIRING" is written in a zigzag pattern on a given number of rows like this: (you may want to display this pattern in a fixed font for better legibility)
+P   A   H   N
+A P L S I I G
+Y   I   R
+And then read line by line: "PAHNAPLSIIGYIR"
+
+Write the code that will take a string and make this conversion given a number of rows:
+string convert(string s, int numRows);
+
+--- Solution ---
+class Solution {
+    public String convert(String s, int numRows) {
+        if (numRows == 1 || s.length() <= numRows) {
+            return s;
+        }
+
+        StringBuilder[] rows = new StringBuilder[numRows];
+        for (int i = 0; i < numRows; i++) {
+            rows[i] = new StringBuilder();
+        }
+
+        int curr = 0;
+        boolean down = false;
+
+        for (char c : s.toCharArray()) {
+            rows[curr].append(c);
+
+            if (curr == 0  || curr == numRows - 1) {
+                down = !down;
+            }
+
+            curr += down ? 1 : -1;
+        }
+
+        StringBuilder result = new StringBuilder();
+        for (StringBuilder row : rows) {
+            result.append(row);
+        }
+
+        return result.toString();
+    }
+}
+
+--- Approach ---
+(Key Concept)
+The main part of this code was building strings followed by the rows.
+Under the given numRows, for loop generates each StringBuilder for all of the rows.
+Then, every character of given string s, was added into the rows step by step followed the rule of zigzag.
+At last, one StringBuilder collect all strings for the result.

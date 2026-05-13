@@ -1,0 +1,29 @@
+(Description)
+Given an integer array nums and an integer k, return true if there are two distinct indices i and j in the array such that nums[i] == nums[j] and abs(i - j) <= k.
+
+--- Solution ---
+class Solution {
+    public boolean containsNearbyDuplicate(int[] nums, int k) {
+        HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
+        
+        for (int i = 0; i < nums.length; i ++) {
+            if (!map.containsKey(nums[i])) {
+                map.put(nums[i], i);
+            }
+            else {
+                int apart = Math.abs(map.get(nums[i]) - i);
+                if (apart <= k) return true;
+                map.put(nums[i], i);
+            }
+        }
+
+        return false;
+    }
+}
+
+--- Approach ---
+This problem ask me to find two numbers in the array which are equal and at most k apart each other.
+
+- (To solve it, I used HashMap in this prolbem.)
+Map saved every distinct numbers with its position in the array,
+then, if it finds any equal numbers, it calls the position of the before number to get how much they apart each other.

@@ -16,8 +16,8 @@ All problems are solved using Java, and each solution is accompanied by a TIL (T
 
 | Difficulty | Target | Completed |
 |------------|--------|----------|
-| Easy       | 50     | 40       |
-| Medium     | 30     | 2        |
+| Easy       | 50     | 42       |
+| Medium     | 30     | 5        |
 | Hard       | 10     | 0        |
 
 ---

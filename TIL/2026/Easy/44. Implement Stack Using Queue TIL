@@ -1,0 +1,56 @@
+(Description)
+Implement a last-in-first-out (LIFO) stack using only two queues. The implemented stack should support all the functions of a normal stack (push, top, pop, and empty).
+
+--- Solution ---
+class MyStack {
+    Queue<Integer> q1;
+    Queue<Integer> q2;
+
+    public MyStack() {
+        q1 = new LinkedList<>();
+        q2 = new LinkedList<>();
+    }
+    
+    public void push(int x) {
+        q1.offer(x);
+    }
+    
+    public int pop() {
+        while (q1.size() > 1) {
+            q2.offer(q1.poll());
+        }
+        int last = q1.poll();
+        
+        Queue<Integer> temp = new LinkedList<>();
+        q1 = q2;
+        q2 = temp;
+
+        return last;
+    }
+    
+    public int top() {
+        while (q1.size() > 1) {
+            q2.offer(q1.poll());
+        }
+        int last = q1.poll();
+        q2.offer(last);
+        
+        Queue<Integer> temp = new LinkedList<>();
+        q1 = q2;
+        q2 = temp;
+
+        return last;
+    }
+    
+    public boolean empty() {
+        return q1.isEmpty();
+    }
+}
+
+--- Approach ---
+This problem asks to make Queue behave like Stack.
+The main difference of the two structures is Queue is FILO(First in Last out), while Stack is LIFO(Last in First out).
+
+To make the function of Stack, I made two queues(q1 and q2).
+At first, stored every pushed integers in the q1.
+And, when it should be pop or top, all of the integers excluded the last one, was moved to the q2, to find the last one which is remianing at the q1.

@@ -1,0 +1,25 @@
+(Description)
+Given the root of a binary tree, invert the tree, and return its root.
+
+--- Solution ---
+class Solution {
+    public TreeNode invertTree(TreeNode root) {
+        if (root == null) {
+            return null;
+        }
+
+        TreeNode temp = root.right;
+        root.right = root.left;
+        root.left = temp;
+
+        invertTree(root.left);
+        invertTree(root.right);
+        
+        return root;
+    }
+}
+
+--- Approach ---
+The main of this problem is changing left and right node at every nodes.
+Therefore, Recursion was the key concept in this problem.
+At every nodes, from root to leaves, invertTree changes root.right and root.left, under the recursion.

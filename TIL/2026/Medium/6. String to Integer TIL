@@ -1,0 +1,49 @@
+(Description)
+Implement the myAtoi(string s) function, which converts a string to a 32-bit signed integer.
+
+--- Solution ---
+class Solution {
+    public int myAtoi(String s) {
+        int i = 0;
+        int n = s.length();
+
+        int sign = 1;
+        int result = 0;
+
+        int INT_MAX = Integer.MAX_VALUE;
+        int INT_MIN = Integer.MIN_VALUE;
+
+        while (i < n && s.charAt(i) == ' ') {
+            i++;
+        }
+
+        if (i < n && (s.charAt(i) == '+' || s.charAt(i) == '-')) {
+            if (s.charAt(i) == '-') {
+                sign = -1;
+            }
+
+            i++;
+        }
+
+        while (i < n && Character.isDigit(s.charAt(i))) {
+            int digit = s.charAt(i) - '0';
+
+            if (result > INT_MAX/10
+            || (result == INT_MAX / 10 && digit > 7)) {
+                return sign == 1 ? INT_MAX : INT_MIN;
+            }
+
+            result = result * 10 + digit;
+            i++;
+        }
+
+        return result * sign;
+    }
+}
+
+--- Approach ---
+The key concept of this problem is covering all of the characters in the given String from left to the right.
+According to the conditions of Atoi, while loops and if statement were generated in order.
+
+One thing that I learned was that a number in the character was ASCII value.
+Therefore, any number in characters subtracted by character 0 is going to be the integer.

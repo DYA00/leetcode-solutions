@@ -1,0 +1,22 @@
+(Description)
+Given an integer n, return true if it is a power of two. Otherwise, return false.
+An integer n is a power of two, if there exists an integer x such that n == 2x.
+
+--- Solution ---
+class Solution {
+    public boolean isPowerOfTwo(int n) {
+        return n > 0 && (n & (n-1)) == 0;
+    }
+}
+
+--- Approach ---
+Bitwise Operator was the key in this algorithm.
+Because there was a pattern when the numbers that are power of two.
+For example,
+- 1 = 0001,
+- 2 = 0010,
+- 4 = 0100,
+- 8 = 1000, ...
+=> Only one bit is 1 if the given number is power of 2.
+
+Therefore when n is power of 2, and if n & (n-1) is calculated, the result is always 0.

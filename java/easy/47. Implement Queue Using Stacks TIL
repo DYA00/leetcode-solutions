@@ -1,0 +1,54 @@
+(Description)
+Implement a first in first out (FIFO) queue using only two stacks. 
+The implemented queue should support all the functions of a normal queue (push, peek, pop, and empty).
+
+--- Solution ---
+class MyQueue {
+    private Stack<Integer> origin;
+    private Stack<Integer> cleaner;
+
+    public MyQueue() {
+        origin = new Stack<>();
+        cleaner = new Stack<>();
+    }
+    
+    public void push(int x) {
+        origin.push(x);
+    }
+    
+    public int pop() {
+        while(origin.size() > 1) {
+            cleaner.push(origin.pop());
+        }
+        int first = origin.pop();
+        while(cleaner.size() >= 1) {
+            origin.push(cleaner.pop());
+        }
+        return first;
+    }
+    
+    public int peek() {
+        while(origin.size() > 1) {
+            cleaner.push(origin.pop());
+        }
+        int first = origin.peek();
+        while(cleaner.size() >= 1) {
+            origin.push(cleaner.pop());
+        }
+        return first;
+    }
+    
+    public boolean empty() {
+        return origin.isEmpty();
+    }
+}
+
+--- Approach ---
+Major difference between two data sets, Queue and Stack, is
+- Queue: FIFO : (First In First Out)
+- Stack: LIFO : (Last In First Out)
+
+Because Queue should be implemented by two stacks, two stacks were generated for different purposes.
+- First Stack: Pushing every values into this stack, so that it maintain same order with Queue.
+- Second Stack: When stack should do pop() or peek() like Queue, first Stack should move out every values into second Stack until only one is left, that is what Queue wants.
+                Then, it moves back all of the values after figuring out the value which should be returned as a Queue.

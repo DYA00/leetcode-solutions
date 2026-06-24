@@ -1,0 +1,46 @@
+(Description)
+Given the head of a singly linked list, return true if it is a palindrome or false otherwise.
+
+--- Solution ---
+class Solution {
+    public boolean isPalindrome(ListNode head) {
+        ListNode slow = head;
+        ListNode fast = head;
+
+        while (fast != null && fast.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+
+        if (fast != null) {
+            slow = slow.next;
+        }
+
+        ListNode reverse = null;
+        while (slow != null) {
+            reverse = new ListNode(slow.val, reverse);
+            slow = slow.next;
+        }
+
+        ListNode current = head;
+        while (reverse != null) {
+            if (current.val != reverse.val) {
+                return false;
+            }
+
+            current = current.next;
+            reverse = reverse.next;
+        }
+
+        return true;
+    }
+}
+
+--- Approach ---
+1. Finding the center node of the Linked List throughout slow and fast pointer.
+- Slow Pointer moves 1 step forwar, while fast pointer do steps. So that when Fast pointer reach to the last node or null, Slow pointer naturally reach to the center.
+
+2. Reversing the linked list after the center node.
+- Because it is the singly linked list, which is not able to use prev, new node was generated as letting the previous node the next node.
+
+3. Comparing the first half Linked List & Reversed second half Linked list.

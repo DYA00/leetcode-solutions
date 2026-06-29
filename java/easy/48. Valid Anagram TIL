@@ -1,0 +1,21 @@
+(Descirption)
+Given two strings s and t, return true if t is an anagram of s, and false otherwise.
+
+--- Solution ---
+class Solution {
+    public boolean isAnagram(String s, String t) {
+        char[] s_chars = s.toCharArray();
+        char[] t_chars = t.toCharArray();
+
+        Arrays.sort(s_chars);
+        Arrays.sort(t_chars);
+
+        return Arrays.equals(s_chars, t_chars);
+    }
+}
+
+--- Approach ---
+1. Converting strings to the Arrays, composed with chars.
+2. Sorting the two Arrays.
+- Anagram means that two words have same letters regardless their order.
+3. Therefore, if they are anagram to each other, the two sorted Arrays should be same.

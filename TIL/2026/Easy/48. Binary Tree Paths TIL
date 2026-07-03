@@ -1,0 +1,45 @@
+(Description)
+Given the root of a binary tree, return all root-to-leaf paths in any order.
+A leaf is a node with no children.
+
+--- Solution ---
+class Solution {
+    List<String> result = new ArrayList<>();
+    List<Integer> path = new ArrayList<>();
+
+    public List<String> binaryTreePaths(TreeNode root) {
+        dfs(root);
+        return result;
+    }
+
+    private void dfs(TreeNode node) {
+        if (node == null) return;
+
+        path.add(node.val);
+
+        if (node.left == null && node.right == null) {
+            StringBuilder sb = new StringBuilder();
+
+            for (int i = 0; i < path.size(); i++) {
+                sb.append(path.get(i));
+                if (i != path.size() - 1) {
+                    sb.append("->");
+                }
+            }
+
+            result.add(sb.toString());
+        }
+
+        dfs(node.left);
+        dfs(node.right);
+
+        path.remove(path.size() - 1);
+    }
+}
+
+--- Approach ---
+dfs, recursive was the key solution.
+- if left and right node are all null, that means the current node is leaf, and it is right time to add current path into the result.
+
+Otherwise, it keeps searching into left and right node.
+Also, when it reaches to the leaf, it removes the last node, that makes the current path reuseable.

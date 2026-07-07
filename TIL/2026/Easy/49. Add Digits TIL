@@ -1,0 +1,26 @@
+(Description)
+Given an integer num, repeatedly add all its digits until the result has only one digit, and return it.
+
+--- Solution ---
+class Solution {
+    public int addDigits(int num) {
+        if (num == 0) {
+            return 0;
+        }
+        else if (num % 9 == 0) {
+            return 9;
+        }
+        else {
+            return num % 9;
+        }
+    }
+}
+
+--- Approach ---
+When calculating a digit nums, they follow one special rule, that is repeating of 9.
+- (1 ~ 9), digital root grow by 1,
+- when it is over 9, at 10, digital root get back to the 1.
+- (10 ~ 18), digital root grow by 1 again.
+- Then, it is over 18, hitting 19, digital root become 1 again.
+
+So that, the algorithm returns under the rule, the digital nums are same with the mod of number 9.

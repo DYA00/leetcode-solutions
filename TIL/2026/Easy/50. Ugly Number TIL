@@ -1,0 +1,32 @@
+(Description)
+An ugly number is a positive integer which does not have a prime factor other than 2, 3, and 5.
+Given an integer n, return true if n is an ugly number.
+
+--- Solution ---
+class Solution {
+    public boolean isUgly(int n) {
+        if (n <= 0) return false;
+        boolean isUgly = false;
+
+        while (n != 1 && !isUgly) {
+            if (n % 2 == 0) {
+                n /= 2;
+            }
+            else if (n % 3 == 0) {
+                n /= 3;
+            }
+            else if (n % 5 == 0) {
+                n /= 5;
+            }
+            else {
+                isUgly = true;
+            }
+        }
+
+        return (n == 1 ? true : false);
+    }
+}
+
+--- Approach ---
+- Until the given number become 1, the number was constantly divided by 2, 3, or 5, when it is possible.
+- If the number was not divided by 2, 3, or 5, that means it have a another prime factor; the number is determined as a ugly number.

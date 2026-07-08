@@ -1,0 +1,44 @@
+(Description)
+Given a string containing digits from 2-9 inclusive, return all possible letter combinations that the number could represent. Return the answer in any order.
+A mapping of digits to letters (just like on the telephone buttons) is given below. Note that 1 does not map to any letters.
+
+--- Solution ---
+class Solution {
+    private final String[] map = {"abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+    
+    public List<String> letterCombinations(String digits) {
+        List<String> result = new ArrayList<>();
+
+        if (digits == null || digits.length() == 0) {
+            return result;
+        }
+
+        backTrack(result, digits, 0, new StringBuilder());
+        return result;
+    }
+
+    private void backTrack (List<String> result, String digits, int index, StringBuilder current) {
+        if (digits.length() == index) {
+            result.add(current.toString());
+            return;
+        }
+
+        String letters = map[digits.charAt(index) - '2'];
+
+        for (int i = 0; i < letters.length(); i++) {
+            current.append(letters.charAt(i));
+            backTrack(result, digits, index+1, current);
+            current.deleteCharAt(current.length() - 1);
+        }
+    }
+}
+
+--- Approach ---
+1. Setting the String array, digits can be mapped to its letters on the phone.
+
+--- Figuring out all of the number of cases, combinations of letters, is the essence of the problem. ---
+--- How to find all the cases was the most important part in building algorithm. ---
+2. Recursion exactly worked to find the result. 
+   When one letter was added, backTrack called itself, then all of the letters could build their own unique combination.
+
+3. When base case, all the letters were filled fully, the created combination letters were added to the ArrayList. 

@@ -1,0 +1,63 @@
+(Description)
+Given an array nums of n integers, return an array of all the unique quadruplets [nums[a], nums[b], nums[c], nums[d]] such that:
+
+1. 0 <= a, b, c, d < n
+2. a, b, c, and d are distinct.
+3. nums[a] + nums[b] + nums[c] + nums[d] == target
+
+You may return the answer in any order.
+
+--- Soltion ---
+class Solution {
+    public List<List<Integer>> fourSum(int[] nums, int target) {
+        List<List<Integer>> result = new ArrayList<>();        
+        Arrays.sort(nums);
+
+        for (int i = 0; i < nums.length - 3; i ++) {
+            if (i > 0 && nums[i] == nums[i - 1]) {
+                continue;
+            }
+            for (int j = i + 1; j < nums.length - 2; j ++) {
+                if (j > i + 1 && nums[j] == nums[j - 1]) {
+                    continue;
+                }
+                int left = j + 1;
+                int right = nums.length - 1;
+
+                while (left < right) {
+                    long sum = (long) nums[i] + nums[j] + nums[left] + nums[right];
+
+                    if (sum == target) {
+                        result.add(List.of(nums[i], nums[j], nums[left], nums[right]));
+
+                        left ++;
+                        right --;
+
+                        while (left < right && nums[left] == nums[left - 1]) {
+                            left ++;
+                        }
+
+                        while (left < right && nums[right] == nums[right + 1]) {
+                            right --;
+                        }
+                    }
+                    else if (sum < target) {
+                        left ++;
+                    }
+                    else {
+                        right --;
+                    }
+                }
+            }
+        }
+
+        return result;
+    }
+}
+
+--- Approach ---
+The Basic algorithm was similar to the 3 Sum problem. left and right, two pointers concept was applied, but 4 Sum algorithm fixed two numbers.
+
+- At first, array was sorted in order to apply the two pointers.
+- Fixing the first two numbers using for statements, and skipped to the next if current number is same with the last one to eliminate duplicates.
+- Setting left and right pointers, two pointers moved themselves followed by the comparison between sum of 4 numbers and the given target value.

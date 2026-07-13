@@ -1,0 +1,51 @@
+(Description)
+Given the head of a linked list, remove the nth node from the end of the list and return its head.
+
+--- Solution ---
+class Solution {
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        ListNode current = head;
+        ListNode finder = current;
+        boolean found = false;
+
+        // When n = 1 && only one node left.
+        if (n == 1) {
+            if (current.next == null) {
+                return null;
+            }
+        }
+
+        // Setting a pointer to detect a node that is away n nodes from the end.
+        for (int i = 0; i < n; i ++) {
+            finder = finder.next;
+        }
+
+        // When the first node should be removed.
+        if (finder == null) {
+            return current.next;
+        }
+
+        while(!found) {
+            if (finder == null || finder.next == null) {
+                found = true;
+            }
+            else {
+                current = current.next;
+                finder = finder.next;
+            }
+        }
+
+        current.next = current.next.next;
+
+        return head;
+    }
+}
+
+--- Approach ---
+(Key Concept)
+- Setting 2 pointers: one is current, the other one is for finding Nth node from the end.
+- If find pointer is getting forward the n steps faster than current pointer, when find pointer's next node is null, that means the next node of current pointer should be removed.
+
+(2 Execptions)
+- (When there is only one node), that means that node should be removed. => It returns null.
+- (When set find pointer was null), that means the first current node should be removed. => It returns the next node of current as a head node.

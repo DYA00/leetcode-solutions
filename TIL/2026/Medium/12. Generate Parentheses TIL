@@ -1,0 +1,51 @@
+(Description)
+Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
+
+--- Soltuion ---
+class Solution {
+    List<String> result = new ArrayList<>();
+
+    public List<String> generateParenthesis(int n) {
+        cases(result, new StringBuilder(), n*2, n, n);
+
+        return result;
+    }
+
+    private void cases(List<String> result, StringBuilder sb, int max, int open, int close) {
+        if (sb.length() == max) {
+            result.add(sb.toString());
+        }
+        else {
+            if (open == close) {
+                sb.append("(");
+                cases(result, sb, max, open-1, close);
+                sb.setLength(sb.length() - 1);
+            }
+            else {
+                if (open > 0) {
+                    sb.append("(");
+                    cases(result, sb, max, open-1, close);
+                    sb.setLength(sb.length() - 1);
+                }
+
+                if (close > 0) {
+                    sb.append(")");
+                    cases(result, sb, max, open, close-1);
+                    sb.setLength(sb.length() - 1);
+                }
+            }
+        }
+    }
+}
+
+--- Approach ---
+The key concept was tracking open parentheses & close parentheses.
+Given number n, open & close parentheses must be n times.
+Therefore I append "(" or ")" to the StringBuilder followed by the rule.
+- "(" should begin to form the well-formed parentheses. => When (open == close) algorithm must append "(" at first.
+- Then, when (open < close) well-formed parentheses have two options.
+    1. Appending another "("
+    2. Appending ")" to close current open parenthese.
+- To cover those cases, algorithmn called recursion at the both cases.
+
+  And, finally, StringBuilder delete added parenthese after recursion to share clean Sb.

@@ -1,0 +1,44 @@
+(Descirption)
+Given a linked list, swap every two adjacent nodes and return its head. 
+You must solve the problem without modifying the values in the list's nodes 
+(i.e., only nodes themselves may be changed.)
+
+
+--- Solution ---
+class Solution {
+    public ListNode swapPairs(ListNode head) {
+        if(head == null || head.next == null) {
+            return head;
+        }
+
+        ListNode result = head.next;
+        ListNode prev = head;
+        ListNode current = head.next;
+        ListNode temp = head.next.next;
+
+        while (temp != null && temp.next != null) {
+            current.next = prev;
+            prev.next = temp.next;
+            prev = temp;
+            current = temp.next;
+            temp = temp.next.next;
+        }
+
+        if (current != null) {
+            current.next = prev;
+            prev.next = temp;
+        }
+
+        return result;
+    }
+}
+
+--- Approach ---
+To solve this problem, three node pointers track the list.
+- prev & current points the two adjacent nodes, that must be swapped.
+- temp node points the next node of adjacent nodes to check if the swap should continue or not.
+
+Swap algorithm was,
+1. current's next node links to previous node => Isolated two adjacent nodes from the list.
+2. prev's next node links to the temp's next node => Linking to the list again & swap current two nodes were swapped.
+- Because next adjacent two nodes should be swapped, prev node links to temp's next, not temp itself.

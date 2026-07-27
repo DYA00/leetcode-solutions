@@ -1,0 +1,49 @@
+(Description)
+- iven two integers dividend and divisor, divide two integers without using multiplication, division, and mod operator.
+
+- The integer division should truncate toward zero, which means losing its fractional part.
+For example, 8.345 would be truncated to 8, and -2.7335 would be truncated to -2.
+
+- Return the quotient after dividing dividend by divisor.
+
+--- Solution ---
+class Solution {
+    public int divide(int dividend, int divisor) {
+        int result = 0;
+        boolean negative = (dividend < 0) ^ (divisor < 0);
+
+        if (dividend == Integer.MIN_VALUE && divisor == -1) {
+            return Integer.MAX_VALUE;
+        }
+
+        long upper = Math.abs((long) dividend);
+        long bottom = Math.abs((long) divisor);
+
+        while (upper >= bottom) {
+            long temp = bottom;
+            long multiple = 1;
+
+            while ((temp << 1) <= upper) {
+                temp <<= 1;
+                multiple <<= 1;
+            }
+
+            upper -= temp;
+            result += multiple;
+        }
+
+        if (!negative) {
+            return result;
+        }
+        return result * -1;
+    }
+}
+
+--- Approach ---
+(Figuring out division function without using multiplication, division, and mod operator)
+=> Key point was subtracting the biggest number(multiple of divisor for division) as possible, until the left number becomes less than divsior itself.
+
+Then, next step is finding the 'biggest mutiple of divisor' to subtract.
+=> Bit operator worked to find that. '<<' moved the bits left, that is same with multiplying by 2.
+Therefore, the algorithm moved divisor's bits to left one by one until divisor is over dividend and subtracted.
+Repeating the subtraction until dividend is less than divisor itself, keeping the number, how many bits were moved, could figure out the division.

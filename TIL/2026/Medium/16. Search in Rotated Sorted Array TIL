@@ -1,0 +1,58 @@
+(Description)
+There is an integer array nums sorted in ascending order (with distinct values).
+
+Prior to being passed to your function, nums is possibly left rotated at an unknown index k (1 <= k < nums.length) such that 
+the resulting array is [nums[k], nums[k+1], ..., nums[n-1], nums[0], nums[1], ..., nums[k-1]] (0-indexed). 
+For example, [0,1,2,4,5,6,7] might be left rotated by 3 indices and become [4,5,6,7,0,1,2].
+
+Given the array nums after the possible rotation and an integer target, return the index of target if it is in nums, or -1 if it is not in nums.
+
+You must write an algorithm with O(log n) runtime complexity.
+
+--- Solution ---
+class Solution {
+    public int search(int[] nums, int target) {
+        int left = 0;
+        int right = nums.length - 1;
+
+        while (left <= right) {
+            int med = (int) Math.floor((left + right)/2);
+
+            if (nums[med] == target) {
+                return med;
+            }
+            
+            if (nums[left] <= nums[med]) {
+                if (nums[left] <= target && target < nums[med]) {
+                    right = med - 1;
+                }
+                else {
+                    left = med + 1;
+                }
+            }
+            else {
+                if (nums[med] < target && target <= nums[right]) {
+                    left = med + 1;
+                }
+                else {
+                    right = med - 1;
+                }
+            }
+        }
+
+        return -1;
+    }
+}
+
+--- Approach ---
+Because of the limited time complexity, O(log n), it was not possible to use loop statement to check all of the integers in the array.
+However, the array was sorted even though it was rotated, integers could be searched followed by a rule.
+
+[Search Algorithm]
+There are two points, left & right.
+Each step it finds the med point of left and right and pivot the med integer.
+At this level, there are two cases.
+1. left number is less or equal than pivoted number => Means that left part was sorted well.
+2. else case : left number is bigger than pivoted number => Means that left part was rotated, But it gurantees that right part was sorted at least.
+
+Then, each cases check the target number is involved in the sorted parts or not & moving the left and right pointer followed by the result.

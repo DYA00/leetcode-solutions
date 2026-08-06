@@ -1,0 +1,76 @@
+(Description)
+Given an array of integers nums sorted in non-decreasing order, find the starting and ending position of a given target value.
+- If target is not found in the array, return [-1, -1].
+- You must write an algorithm with O(log n) runtime complexity.
+
+--- Solution ---
+class Solution {
+    public int[] searchRange(int[] nums, int target) {
+        int start = findStart(nums, target);
+        int end = findEnd(nums, target);
+
+        return new int[] {start, end};
+    }
+
+    private int findStart(int[] nums, int target) {
+        int left = 0;
+        int right = nums.length - 1;
+        int result = -1;
+
+        if (right == -1) return -1;
+
+        while (left <= right) {
+            int med = (left + right) / 2;
+
+            if (nums[med] == target) {
+                result = med;
+                right = med - 1;
+            }
+            else if (nums[med] < target) {
+                left = med + 1;
+            }
+            else {
+                right = med - 1;
+            }
+        }
+
+        return result;
+    }
+
+    private int findEnd(int[] nums, int target) {
+        int left = 0;
+        int right = nums.length - 1;
+        int result = -1;
+
+        if (right == -1) return -1;
+
+        while (left <= right) {
+            int med = (left + right) / 2;
+
+            if (nums[med] == target) {
+                result = med;
+                left = med + 1;
+            }
+            else if (nums[med] < target) {
+                left = med + 1;
+            }
+            else {
+                right = med - 1;
+            }
+        }
+
+        return result;
+    }
+}
+
+--- Approach ---
+Because the limited time complexity was O(lon n), the algorithm should approach with binary search.
+Overmore this algorithm should search the boundaries of target, not a existence => It needs two binary searches for finding starting & ending index.
+
+The algorithm of each searches was basically same.
+- They find the med point between left & right pointers.
+- Moving left & right pointer followed by the comparison between int at the med position & target.
+
+[Just One Difference]
+When finding start index, it move right pointer to the left because the start point must be the most lefted target num.
+While, when finding end index, it just move left pointer to the right.

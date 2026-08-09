@@ -1,0 +1,80 @@
+(Description)
+Determine if a 9 x 9 Sudoku board is valid. Only the filled cells need to be validated according to the following rules:
+1. Each row must contain the digits 1-9 without repetition.
+2. Each column must contain the digits 1-9 without repetition.
+3. Each of the nine 3 x 3 sub-boxes of the grid must contain the digits 1-9 without repetition.
+
+--- Solution ---
+class Solution {
+    public boolean isValidSudoku(char[][] board) {
+        HashSet<Character> seen = new HashSet<>();
+
+        // [Rule No.1] Checking Row Line
+        for (char[] row : board) {
+            for (char c : row) {
+                if (c != '.') {
+                    if(seen.contains(c)) {
+                        return false;
+                    }
+                    else {
+                        seen.add(c);
+                    }
+                }
+            }
+            seen.clear();
+        }
+
+        // [Rule No.2] Checking Col Line
+        for (int col = 0; col < 9; col++) {
+            for (int row = 0; row < 9; row++) {
+                char c = board[row][col];
+
+                if (c != '.') {
+                    if (seen.contains(c)) {
+                        return false;
+                    }
+                    else {
+                        seen.add(c);
+                    }
+                }
+            }
+            seen.clear();
+        }
+
+        // [Rule No.3] Checking 3x3 sub-boxes.
+        for (int startRow = 0; startRow < 9; startRow += 3) {
+            for (int startCol = 0; startCol < 9; startCol += 3) {
+                for (int i = startRow; i < startRow + 3; i++) {
+                    for (int j = startCol; j < startCol + 3; j++) {
+                        char c = board[i][j];
+
+                        if (c != '.') {
+                            if (seen.contains(c)) {
+                                return false;
+                            }
+                            else {
+                                seen.add(c);
+                            }
+                        }
+                    }
+                }
+
+                seen.clear();
+            }
+        }
+
+        return true;
+    }
+}
+
+---Approach ---
+This problem is testing how to touch 2D array.
+- The 3 rules of Sudoku asks to check row, col, and parts in the given 2D array.
+
+Therefore, I made 3 different loop statements followed by the 3 different rules.
+- Rule 1 & 2 were solved easily using nested loop.
+Outer loop statement covers the lines(Row or Col), and inner loop covers the other line.
+
+- Rule 3 were solved by nested loop in nested loop.
+Because it should reach to the 3x3 sub boxes, first nested loop made the boundary of 3x3 thoughout implement by 3.
+Second nested loop checked all of the characters in the boundary which was set by first one.

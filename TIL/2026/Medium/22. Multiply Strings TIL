@@ -1,0 +1,44 @@
+(Description)
+- Given two non-negative integers num1 and num2 represented as strings, return the product of num1 and num2, also represented as a string.
+- Note: You must not use any built-in BigInteger library or convert the inputs to integer directly.
+
+--- Solution ---
+class Solution {
+    public String multiply(String num1, String num2) {
+        int length1 = num1.length();
+        int length2 = num2.length();
+        int[] nums = new int[length1 + length2];
+
+        for (int i = length1 - 1; i >= 0; i--) {
+            for (int j = length2 - 1; j >= 0; j--) {
+                int a = num1.charAt(i) - '0';
+                int b = num2.charAt(j) - '0';
+
+                int product = a * b;
+                nums[i+j+1] += product;
+                nums[i+j] += nums[i+j+1] / 10;
+                nums[i+j+1] %= 10;
+            }
+        }
+
+        StringBuilder sb = new StringBuilder();
+        for (int num : nums) {
+            if (sb.length() == 0 && num == 0) {
+                continue;
+            }
+            sb.append(num);
+        }
+        
+        if (sb.length() > 0) {
+            return sb.toString();
+        }
+        return "0";
+    }
+}
+
+--- Approach ---
+Because it was not allowed to convert the inputs to integer in direct, the algorithm should approach converting character to integers digit by digit.
+Using the nested loop, it converted each digit's character to integer, and multiply them.
+- Because the approach from last digit is more easier to calculate, the variables, i & j in the nested loop started from the last digit.
+- Then, calculated products were put in to the int array, and carried over if the current digit's integer is over 10.
+- The int array was set to cover the sum of lengths of the given two inputs, because the maximum digit of product of [x digit int] & [y digit int] is (x + y) digit.

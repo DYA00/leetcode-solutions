@@ -1,0 +1,45 @@
+(Description)
+Given an array nums of distinct integers, return all the possible permutations. You can return the answer in any order.
+
+--- Solution ---
+class Solution {
+    List<List<Integer>> result;
+    public List<List<Integer>> permute(int[] nums) {
+        result = new ArrayList<>();
+        Arrays.sort(nums);
+        findOrder(nums, new ArrayList<>(), new int[nums.length]);
+        return result;
+    }
+
+    private void findOrder(int[] nums, List<Integer> order, int[] road) {
+        if (order.size() == nums.length) {
+            result.add(new ArrayList<>(order));
+            return;
+        }
+        
+        for (int i = 0; i < nums.length; i ++) {
+            if(road[i] == 0) {
+                road[i] = 1;
+                order.add(nums[i]);
+
+                findOrder(nums, order, road);
+
+                order.remove(order.size() - 1);
+                road[i] = 0;
+            }
+        }
+    }
+}
+
+--- Approach ---
+Key point in this algorithm is the check box of int array.
+The cehck box have same legth of the given array, filling all as 0 at the beginning, changed its value to the 1 if the int was added at the same position in the given array.
+
+Then, in the recursion step, algorithm look for the checkbox,
+1. if current value is 1, it skips because the int at the position was added already,
+2. but if the value is 0, it adds the int at the position.
+
+[Improvement]
+After completing this problem, I recognized that this solution is not efficient in enough.
+Because in the step of opening the check box, it uses for loop statment from beginning to the end.
+If it can skip the positions that was added already, it might save more time.

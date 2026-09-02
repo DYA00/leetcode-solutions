@@ -1,0 +1,51 @@
+(Description)
+Given a collection of numbers, nums, that might contain duplicates, return all possible unique permutations in any order.
+
+--- Solution ---
+class Solution {
+    List<List<Integer>> result;
+    public List<List<Integer>> permuteUnique(int[] nums) {
+        result = new ArrayList<>();
+        Arrays.sort(nums);
+        boolean[] used = new boolean[nums.length];
+        backTrack(nums, new ArrayList<>(), used);
+        return result;
+    }
+
+    private void backTrack(int[] nums, List<Integer> permutation, boolean[] used) {
+        if (permutation.size() == nums.length) {
+            result.add(new ArrayList<>(permutation));
+            return;
+        }
+
+        for (int i = 0; i < nums.length; i++) {
+            if (used[i] == true) {
+                continue;
+            }
+
+            if (i > 0 && nums[i] == nums[i-1] && !used[i-1]) {
+                continue;
+            }
+
+            permutation.add(nums[i]);
+            used[i] = true;
+
+            backTrack(nums, permutation, used);
+
+            permutation.remove(permutation.size()-1);
+            used[i] = false;
+        }
+    }
+}
+
+--- Approach ---
+1. Sorting the given nums to check the duplicates under the order.
+2. Array of boolean role as a checklist to show if the number was added or not at the position.
+3. Recursion to find the unique permutation.
+
+[Key Point]
+- Because the nums contain duplicates, the algorithm should skip same starting value to find the unique List.
+- Therefore, after checking the base case, that the List size becomes full, it checks if current value was used as a starting number or not.
+- Then, at the left recursion algorithm, it add current value follwed by used checkbox (boolean array).
+
+Additionally in the recursion process, because every cases share the same List<Integer>, when the List should be added, it should be copied before to avoid error, that every Lists are blank.

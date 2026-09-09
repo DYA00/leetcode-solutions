@@ -1,0 +1,52 @@
+(Description)
+Given an input string s and a pattern p, implement regular expression matching with support for '.' and '*' where:
+- '.' Matches any single character.​​​​ 
+- '*' Matches zero or more of the preceding element.
+
+Return a boolean indicating whether the matching covers the entire input string (not partial).
+
+--- Solution ---
+class Solution {
+    public boolean isMatch(String s, String p) {
+        return backTrack(s, p, 0, 0);
+    }
+
+    private boolean backTrack(String s, String p, int sIndex, int pIndex) {
+        if (pIndex == p.length()) {
+            return sIndex == s.length();
+        }
+
+        boolean firstMatch =
+                sIndex < s.length() &&
+                (s.charAt(sIndex) == p.charAt(pIndex)
+                || p.charAt(pIndex) == '.');
+
+        // Next pattern character is '*'
+        if (pIndex + 1 < p.length()
+                && p.charAt(pIndex + 1) == '*') {
+
+            return backTrack(s, p, sIndex, pIndex + 2) 
+                || (firstMatch && backTrack(s, p, sIndex + 1, pIndex));
+        }
+
+        if (firstMatch) {
+            return backTrack(s, p, sIndex + 1, pIndex + 1);
+        }
+
+        return false;
+    }
+}
+
+--- Approach ---
+The key concpet of this algorithm is the recursion, having the given two strings & managing them throughout the values of index.
+
+In the recursion, there are three cases.
+1. The characters are matched and next character is not *.
+2. The characters are matched and next character at the string p is *.
+3. The characters are not matched, but the next character at the string p is *.
+
+At the first case, it calls the recursion after adding 1 for each index values.
+Or at the case 2 and 3, it calls the both cases (skipping *, which means use the previous element zero, or adding only one for the string s, meaning it used previous element once).
+Then, it uses or operator to check if one case could return true or not.
+
+Becaue, if it returns true, that pattern that used * times at that case was mathing with the given s String.

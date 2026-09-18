@@ -1,0 +1,47 @@
+(Description)
+- You are given an array of k linked-lists lists, each linked-list is sorted in ascending order.
+- Merge all the linked-lists into one sorted linked-list and return it.
+
+--- Solution ---
+class Solution {
+    public ListNode mergeKLists(ListNode[] lists) {
+        return merge(lists, null, null);
+    }
+
+    private ListNode merge(ListNode[] lists, ListNode result, ListNode lastNode) {
+        int minIndex = -1;
+
+        for (int i = 0; i < lists.length; i++) {
+            if (lists[i] != null && (minIndex == -1 || lists[i].val < lists[minIndex].val)) {
+                minIndex = i;
+            }
+        }
+
+        if (minIndex == -1) {
+            return result;
+        }
+
+        ListNode current = lists[minIndex];
+        lists[minIndex] = lists[minIndex].next;
+
+        if (result == null) {
+            result = current;
+            lastNode = current;
+        }
+        else {
+            lastNode.next = current;
+            lastNode = current;
+        }
+
+        return merge(lists, result, lastNode);
+    }
+}
+
+--- Approach ---
+In the recursion, it finds the right node involving smallest value throughout using for loop statement.
+It keeps the minIndex, and keep updating the index if a node, that haves smaller value, was found in the loop.
+
+Therefore, base case is when minIndex was not changed, meaning all of the nodes were sorted already.
+Or, it moves the ListNode to the next node if the smallest node was added.
+
+In the result ListNode, because it should add to the last node, recursion pass two nodes result(first node to return) & lastnode(appending easiily to the last)

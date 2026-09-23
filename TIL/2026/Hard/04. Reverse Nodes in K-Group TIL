@@ -1,0 +1,63 @@
+(Description)
+- Given the head of a linked list, reverse the nodes of the list k at a time, and return the modified list.
+- k is a positive integer and is less than or equal to the length of the linked list. 
+  If the number of nodes is not a multiple of k then left-out nodes, in the end, should remain as it is.
+
+(You may not alter the values in the list's nodes, only nodes themselves may be changed.)
+
+--- Solution ---
+class Solution {
+    public ListNode reverseKGroup(ListNode head, int k) {
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+
+        ListNode groupPrev = dummy;
+
+        while (true) {
+            // Find the kth node of the current group
+            ListNode kth = groupPrev;
+
+            for (int i = 0; i < k; i++) {
+                kth = kth.next;
+
+                // Not enough nodes left
+                if (kth == null) {
+                    return dummy.next;
+                }
+            }
+
+            // First node after the current group
+            ListNode groupNext = kth.next;
+
+            // Reverse the current group
+            ListNode prev = groupNext;
+            ListNode curr = groupPrev.next;
+
+            while (curr != groupNext) {
+                ListNode temp = curr.next;
+                curr.next = prev;
+                prev = curr;
+                curr = temp;
+            }
+
+            // Reconnect the reversed group
+            ListNode temp = groupPrev.next;
+            groupPrev.next = kth;
+            groupPrev = temp;
+        }
+    }
+}
+
+--- Approach ---
+The idea of dummy node could make this problem to solve easily.
+Because the dummy node keeps the position before the first node, when the number of nodes are not enough to 
+multiple of the given number k, it could easily stops the loop, returning the next node of dummy.
+
+(Reversing Process)
+In the K-Group nodes, if the first node's next was set to the next group's node, moving the pointers
+1. the node should become the next to reverse is what was last linked one.
+2. the node should be set its next is right next node from current node.
+
+If this process repeats until that two pointers become same node, the nodes in the K-Group reversed.
+
+Then, it sets groupPrev node points to the previous node of next K-Group nodes, which is the last node of the current K-Group to repeat this process in the next group.

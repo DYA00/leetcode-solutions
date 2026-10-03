@@ -1,0 +1,82 @@
+(Description)
+You are given a string s and an array of strings words. All the strings of words are of the same length.
+(A concatenated string is a string that exactly contains all the strings of any permutation of words concatenated.)
+
+- For example, if words = ["ab","cd","ef"], then "abcdef", "abefcd", "cdabef", "cdefab", "efabcd", and "efcdab" are all concatenated strings. 
+  "acdbef" is not a concatenated string because it is not the concatenation of any permutation of words.
+
+=> Return an array of the starting indices of all the concatenated substrings in s. You can return the answer in any order.
+
+--- Solution ---
+class Solution {
+    public List<Integer> findSubstring(String s, String[] words) {
+        List<Integer> result = new ArrayList<>();
+
+        int wordLength = words[0].length();
+        int wordCount = words.length;
+        int totalLength = wordLength * wordCount;
+
+        HashMap<String, Integer> required = new HashMap<>();
+
+        for (String word : words) {
+            required.put(word, required.getOrDefault(word, 0) + 1);
+        }
+
+        for (int offset = 0; offset < wordLength; offset++) {
+            int left = offset;
+            int right = offset;
+
+            HashMap<String, Integer> window = new HashMap<>();
+            int count = 0;
+
+            while (right + wordLength <= s.length()) {
+                String current = s.substring(right, right + wordLength);
+                right += wordLength;
+
+                if(!required.containsKey(current)) {
+                    window.clear();
+                    count = 0;
+                    left = right;
+                    continue;
+                }
+
+                window.put(current, window.getOrDefault(current, 0) + 1);
+                count ++;
+
+                while (window.get(current) > required.get(current)) {
+                    String leftWord = s.substring(left, left + wordLength);
+                    window.put(leftWord, window.get(leftWord) - 1);
+                    left += wordLength;
+                    count--;
+                }
+
+                if (count == wordCount) {
+                    result.add(left);
+
+                    String leftWord = s.substring(left, left + wordLength);
+                    window.put(leftWord, window.get(leftWord) - 1);
+                    left += wordLength;
+                    count--;
+                }
+            }
+        }
+
+        return result;
+    }
+}
+
+--- Approach ---
+The key concept of this algorithm is two HashMaps.
+The most difficult part of this problem was figuring out how to store & compare the words.
+
+At first, I considered about one HashMap to show frequency of each words, and one int array to store of used number of each word.
+However there was a possibility of existing duplicated words in the given word set, therefore fixed array was not that much good choice.
+
+If used words could be counted by another HashMap, it could easily store the words, and compare each time if current used words is over the required frequecy or not.
+
+In the loop statement, the most important is understanding what concatenation is.
+Because the concatenation was composed the words, having same length, it was totally fine to loop not one character by one, but chunk of words.
+In the loop statement, two pointers were made, pointing left, that should be added to the result List as a starting indice, and right to check chunk of words.
+
+If there was no problem in comparing two HashMaps, and count is same with wordCount, left was added to the result and moved to forward.
+Or when current word frequency is over than given the number of words or wrong word was detected, it moves right pointer, and rearrange window HashMap followed by the situations.

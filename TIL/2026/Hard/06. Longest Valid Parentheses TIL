@@ -1,0 +1,46 @@
+(Description)
+Given a string containing just the characters '(' and ')', return the length of the longest valid (well-formed) parentheses substring.
+
+--- Solution ---
+class Solution {
+    public int longestValidParentheses(String s) {
+        Deque<Integer> stack = new ArrayDeque<>();
+        int max = 0;
+
+        stack.push(-1);
+
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+
+            if (c == '(') {
+                stack.push(i);
+            }
+            else {
+                stack.pop();
+
+                if (stack.isEmpty()) {
+                    stack.push(i);
+                }
+                else {
+                    max = Math.max(max, i - stack.peek());
+                }
+            }
+        }
+
+        return max;
+    }
+}
+
+--- Approach ---
+At first, I tried to solve this problem throughout stack of characters '(' and ')'.
+But, in this approach, it should check whether it is valid parenthese all of the steps, and it was unefficient.
+
+Therefore, I converted the stack from character to integers storing the indicies of parentheses.
+1. It push the integer, -1 at first as a boundary.
+2. If it meets (, it push the current index, else at the character ), it alsways pop up one from the stack.
+  Because boundary integer was set at first, when the one index was popped, if the stack is empty, that means the number of ) is more than (.
+  It was the signal that current parentheses were unvalid, then it sets another boundary as the current index.
+3. Otherwise if the stack is not empty, it means that the current parentheses are valid.
+  At this case, it updates the max length of valid parentheses.
+
+I learned that I could use the stack as a function tool, not only sotring data through converting its data type from characters into Integer, indicies.

@@ -1,0 +1,56 @@
+(Description)
+Given an m x n matrix, return all elements of the matrix in spiral order.
+
+--- Solution ---
+class Solution {
+    public List<Integer> spiralOrder(int[][] matrix) {
+        List<Integer> result = new ArrayList<>();
+
+        int top = 0;
+        int bottom = matrix.length - 1;
+        int left = 0;
+        int right = matrix[0].length - 1;
+
+        while (top <= bottom && left <= right) {
+            for (int col = left; col <= right; col++) {
+                result.add(matrix[top][col]);
+            }
+            top++;
+
+            for (int row = top; row <= bottom; row++) {
+                result.add(matrix[row][right]);
+            }
+            right--;
+
+            if (top <= bottom) {
+                for (int col = right; col >= left; col--) {
+                    result.add(matrix[bottom][col]);
+                }
+                bottom--;
+            }
+
+            if (left <= right) {
+                for (int row = bottom; row >= top; row--) {
+                    result.add(matrix[row][left]);
+                }
+                left++;
+            }
+        }
+
+        return result;
+    }
+}
+
+--- Approach ---
+- Four loop statements were solutions for this problem.
+Because it should touch all elements to put them into the list, four loops made easier to reach them.
+
+- Then, the question in here is how to reach them followed by the spiral order.
+It set four boundaries, left, right, top, and bottom.
+Those values roled as a base case in the outer while loop, if left value is bigger than right, or top value is lower than bottom, 
+that means there is no more elements to touch, it quits the four inner for loops.
+
+- Each four loops have their own direction.
+From left to right, top to bottom, right to left, and bottom to top in order, and that was a spiral order.
+Also, in last two loop statements, it checks whether the matrix still have elements left with if statment,
+therefore it could safely add inner matrix elements as well. 
